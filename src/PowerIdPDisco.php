@@ -223,7 +223,8 @@ class PowerIdPDisco extends IdPDisco
         $list = parent::filterList($list);
 
         try {
-            $spmd = $this->metadata->getMetaData($this->spEntityId, 'saml20-sp-remote');
+            preg_match('/spentityid=([^&]*)/', urldecode(urldecode($_REQUEST['return'])), $matches);
+            $spmd = $this->metadata->getMetaData($matches[1], 'saml20-sp-remote');
         } catch (Exception $e) {
             if (
                 $this->discoconfig->getOptionalBoolean('useunsafereturn', false)
